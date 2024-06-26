@@ -3,7 +3,7 @@ name: Update Index HTML
 on:
   push:
     branches:
-      - main  # Cambia 'main' por el nombre de tu rama principal si es diferente
+      - main  # Cambia 'main' por tu rama principal si es diferente
 
 jobs:
   update-index:
@@ -11,14 +11,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      
+
       - name: Update index.html
         run: echo "<h1>Updated with CI/CD!</h1>" > index.html
-      
+
       - name: Commit changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_SECRET_TOKEN }}  
         run: |
-          git config --global user.email "github-actions@dannyvas"
+          git config --global user.email "github-actions@dannyvas23@gmail.com"
           git config --global user.name "Danny"
           git add index.html
-          git commit -m "Update index.html with CI/CD"
-          git push
+          git commit -m "Actualizacion index.html with CI/CD"
+          git push https://github.com/${{ github.repository }}.git HEAD:main
